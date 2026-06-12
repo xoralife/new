@@ -1,6 +1,8 @@
-def main():
-    print("Hello from new!")
+from fastapi import FastAPI
+from app.routers.user import router as user_router
+from app.database import Base,engin
 
+app = FastAPI()
 
-if __name__ == "__main__":
-    main()
+app.include_router(user_router)
+Base.metadata.create_all(engin)
