@@ -9,10 +9,17 @@ router = APIRouter(
 
 @router.get("")
 def search(name : str="",db = depends(get_db())):
-    users = db.query(User).filter(User.name == name).all()
+    users = db.query(User).filter(User.name.ilike(f"%.com")).all()
     return users
 @router.post("")
 def store(request: UserSchema,db = depends(get_db())):
+    user = db.query(User).filter(User.email == request.email).first()
+    if user:
+        return user
+    
+
+
+
     print("inside store")
 
     user = User(
